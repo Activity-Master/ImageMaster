@@ -14,7 +14,12 @@
     <name>Image Master</name>
 	
     <dependencies>
-     
+
+        <dependency>
+            <groupId>com.guicedee.servlets</groupId>
+            <artifactId>guiced-servlets</artifactId>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>
@@ -28,13 +33,13 @@
                         <path>
                             <groupId>org.mapstruct</groupId>
                             <artifactId>mapstruct-processor</artifactId>
-                            <version>1.4.1.Final</version>
+                            <version>1.4.2.Final</version>
                         </path>
                         <!-- other annotation processors -->
                         <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
-                            <version>1.18.16</version>
+                            <version>1.18.18</version>
                         </path>
                     </annotationProcessorPaths>
                     <annotationProcessors>
@@ -56,7 +61,7 @@
                     <dependency>
                         <groupId>org.projectlombok</groupId>
                         <artifactId>lombok</artifactId>
-                        <version>1.18.16</version>
+                        <version>1.18.18</version>
                     </dependency>
                     <dependency>
                         <groupId>com.guicedee.services</groupId>
