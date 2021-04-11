@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.armineasy.activitymaster</groupId>
+        <groupId>com.guicedee.activitymaster</groupId>
         <artifactId>activitymaster-group</artifactId>
         <version>0.0.0_0-SNAPSHOT</version>
     </parent>
@@ -21,9 +21,5 @@
         </dependency>
 
     </dependencies>
-    <build>
-        <plugins>
 
-        </plugins>
-    </build>
 </project>
