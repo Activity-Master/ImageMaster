@@ -12,6 +12,11 @@ module com.guicedee.activitymaster.imagemaster {
 	
 	requires static lombok;
 	
+	
+	exports com.guicedee.activitymaster.imagemaster.implementations;
+	exports com.guicedee.activitymaster.imagemaster;
+	
+	
 	opens com.guicedee.activitymaster.imagemaster.implementations to com.google.guice;
 	opens com.guicedee.activitymaster.imagemaster to com.google.guice;
 	opens com.guicedee.activitymaster.imagemaster.services to com.google.guice;
