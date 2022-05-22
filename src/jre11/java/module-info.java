@@ -10,9 +10,7 @@ module com.guicedee.activitymaster.imagemaster {
 	
 	provides IGuiceModule with ImageServiceBinder;
 	
-	requires static lombok;
-	
-	
+
 	exports com.guicedee.activitymaster.imagemaster.implementations;
 	exports com.guicedee.activitymaster.imagemaster;
 	
