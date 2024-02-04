@@ -9,6 +9,7 @@ module com.guicedee.activitymaster.imagemaster {
 	requires com.guicedee.guicedservlets;
 	
 	provides IGuiceModule with ImageServiceBinder;
+	requires static lombok;
 	
 
 	exports com.guicedee.activitymaster.imagemaster.implementations;

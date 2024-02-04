@@ -1,7 +1,8 @@
 package com.guicedee.activitymaster.imagemaster;
 
 import com.guicedee.activitymaster.imagemaster.services.IImageService;
-import com.guicedee.logger.LogFactory;
+import lombok.extern.java.Log;
+
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -10,10 +11,10 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+@Log
 public class ImageService implements IImageService<ImageService>
 {
-	private static final Logger log = LogFactory.getLog(ImageService.class);
-	
+
 	@Override
 	public BufferedImage toBufferedImage(byte[] dataBytes)
 	{
