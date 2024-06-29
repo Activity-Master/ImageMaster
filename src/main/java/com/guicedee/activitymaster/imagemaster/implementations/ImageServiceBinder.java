@@ -5,7 +5,7 @@ import com.guicedee.activitymaster.imagemaster.ImageService;
 import com.guicedee.activitymaster.imagemaster.services.IImageService;
 import com.guicedee.guicedinjection.interfaces.IGuiceModule;
 
-public class ImageServiceBinder extends PrivateModule
+public class ImageServiceBinder extends AbstractModule
 		implements IGuiceModule<ImageServiceBinder>
 {
 	
@@ -21,8 +21,5 @@ public class ImageServiceBinder extends PrivateModule
 		bind(genericKey).to(realKey);
 		bind(realKey).to(ImageService.class);
 		bind(IImageService.class).to(genericKey);
-		
-		expose(genericKey);
-		expose(IImageService.class);
 	}
 }

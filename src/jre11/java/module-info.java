@@ -6,12 +6,15 @@ module com.guicedee.activitymaster.imagemaster {
 	requires java.logging;
 	exports com.guicedee.activitymaster.imagemaster.services;
 	
-	requires com.guicedee.guicedservlets;
+	
+	//requires com.guicedee.guicedservlets;
 	
 	provides IGuiceModule with ImageServiceBinder;
 	requires static lombok;
+	requires com.google.guice;
+	requires com.guicedee.client;
 	
-
+	
 	exports com.guicedee.activitymaster.imagemaster.implementations;
 	exports com.guicedee.activitymaster.imagemaster;
 	

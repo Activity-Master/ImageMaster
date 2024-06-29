@@ -13,10 +13,13 @@
 	
     <dependencies>
 
+
         <dependency>
-            <groupId>com.guicedee.servlets</groupId>
-            <artifactId>guiced-servlets</artifactId>
+            <groupId>com.guicedee.activitymaster</groupId>
+            <artifactId>activity-master</artifactId>
+            <version>${project.version}</version>
         </dependency>
+
 
     </dependencies>
 
