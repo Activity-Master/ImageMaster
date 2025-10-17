@@ -1,17 +1,15 @@
 package com.guicedee.activitymaster.imagemaster;
 
 import com.guicedee.activitymaster.imagemaster.services.IImageService;
-import lombok.extern.java.Log;
+import lombok.extern.log4j.Log4j2;
 
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-@Log
+@Log4j2
 public class ImageService implements IImageService<ImageService>
 {
 
@@ -29,7 +27,7 @@ public class ImageService implements IImageService<ImageService>
 		}
 		catch (IOException e)
 		{
-			log.log(Level.SEVERE, "Error reading bytes", e);
+			log.error("Error reading bytes", e);
 			return null;
 		}
 	}
