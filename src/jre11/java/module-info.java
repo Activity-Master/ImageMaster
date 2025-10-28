@@ -6,7 +6,7 @@ module com.guicedee.activitymaster.imagemaster {
 	requires java.logging;
 	exports com.guicedee.activitymaster.imagemaster.services;
 	
-	
+	requires org.apache.logging.log4j;
 	//requires com.guicedee.guicedservlets;
 	
 	provides IGuiceModule with ImageServiceBinder;
