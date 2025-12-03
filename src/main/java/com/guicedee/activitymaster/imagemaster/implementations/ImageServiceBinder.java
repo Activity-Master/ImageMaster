@@ -3,7 +3,7 @@ package com.guicedee.activitymaster.imagemaster.implementations;
 import com.google.inject.*;
 import com.guicedee.activitymaster.imagemaster.ImageService;
 import com.guicedee.activitymaster.imagemaster.services.IImageService;
-import com.guicedee.guicedinjection.interfaces.IGuiceModule;
+import com.guicedee.client.services.lifecycle.IGuiceModule;
 
 public class ImageServiceBinder extends AbstractModule
 		implements IGuiceModule<ImageServiceBinder>

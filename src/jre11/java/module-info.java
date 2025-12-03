@@ -1,5 +1,5 @@
 import com.guicedee.activitymaster.imagemaster.implementations.ImageServiceBinder;
-import com.guicedee.guicedinjection.interfaces.IGuiceModule;
+import com.guicedee.client.services.lifecycle.IGuiceModule;
 
 module com.guicedee.activitymaster.imagemaster {
 	requires java.desktop;
