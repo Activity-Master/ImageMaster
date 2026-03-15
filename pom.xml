@@ -10,6 +10,10 @@
     <artifactId>image-master</artifactId>
     <packaging>jar</packaging>
     <name>Image Master</name>
+
+    <properties>
+        <project.scm.nameUrl>/Activity-Master/ImageMaster</project.scm.nameUrl>
+    </properties>
 	
     <dependencies>
 
