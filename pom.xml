@@ -16,7 +16,10 @@
     </properties>
 	
     <dependencies>
-
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-sql-client</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>com.activity-master</groupId>
@@ -24,7 +27,46 @@
             <version>${project.version}</version>
         </dependency>
 
+        <!-- OpenAPI 3.1 annotations for the Image REST resources -->
+        <dependency>
+            <groupId>com.guicedee</groupId>
+            <artifactId>openapi</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.guicedee.modules.services</groupId>
+            <artifactId>testcontainers</artifactId>
+            <scope>test</scope>
+        </dependency>
 
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <compilerArgs>
+                        <arg>--add-reads</arg>
+                        <arg>org.jboss.logging=org.hibernate.reactive</arg>
+                        <arg>--add-reads</arg>
+                        <arg>org.hibernate.orm.core=com.guicedee.activitymaster.fsdm</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <argLine>
+                        --add-reads org.jboss.logging=org.hibernate.reactive
+                        --add-reads org.hibernate.orm.core=com.guicedee.activitymaster.fsdm
+                    </argLine>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
