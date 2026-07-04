@@ -14,7 +14,7 @@ public class ImageServiceBinder extends AbstractModule
 	@Override
 	protected void configure()
 	{
-        log.info("Using Image Activity Master Module and routes at /rest/{enterprise}/image");
+        log.info("🖼️ Using Image Activity Master Module and routes at /rest/{enterprise}/image");
 		@SuppressWarnings("Convert2Diamond")
 		Key<IImageService<?>> genericKey = Key.get(new TypeLiteral<IImageService<?>>() {});
 		@SuppressWarnings("Convert2Diamond")

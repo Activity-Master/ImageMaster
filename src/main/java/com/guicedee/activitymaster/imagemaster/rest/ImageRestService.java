@@ -106,6 +106,39 @@ public class ImageRestService
 	}
 
 	// ──────────────────────────────────────────────────────────────────────────
+	// Read — retrieve by classification / value (optionally bounded scaling)
+	// ──────────────────────────────────────────────────────────────────────────
+
+	/**
+	 * Renders the first image carrying the supplied classification (and optional value), optionally
+	 * bounded to {@code w}x{@code h} for an optimum payload.
+	 */
+	@GET
+	@Path("{requestingSystemName}/classification/{classification}")
+	@Produces("image/*")
+	@Operation(operationId = "getImageByClassification", summary = "Retrieve an image by classification",
+			description = "Returns the first stored image carrying the given classification (and optional value), honouring row-level security and optional width/height bounded scaling (aspect ratio preserved). The media type is sniffed from the bytes and an immutable cache header is set.")
+	@ApiResponse(responseCode = "200", description = "Image found",
+			content = @Content(mediaType = "image/*", schema = @Schema(type = "string", format = "binary")))
+	@ApiResponse(responseCode = "404", description = "No matching image found or not readable in this scope")
+	public Uni<Response> getImageByClassification(@Parameter(description = "Owning enterprise name", example = "Acme") @PathParam("enterprise") String enterpriseName,
+	                                              @Parameter(description = "Requesting system name (security scope)", example = "Image System") @PathParam("requestingSystemName") String systemName,
+	                                              @Parameter(description = "Classification name to match", example = "Avatar") @PathParam("classification") String classification,
+	                                              @Parameter(description = "Classification value to match (blank matches any value)", example = "user-123") @QueryParam("value") @DefaultValue("") String value,
+	                                              @Parameter(description = "Maximum width in px (0 = original)", example = "256") @QueryParam("w") @DefaultValue("0") int width,
+	                                              @Parameter(description = "Maximum height in px (0 = original)", example = "256") @QueryParam("h") @DefaultValue("0") int height)
+	{
+		return SessionUtils.<Response>withActivityMaster(enterpriseName, systemName, tuple -> {
+			Mutiny.Session session = tuple.getItem1();
+			ISystems<?, ?> system = tuple.getItem3();
+			Uni<byte[]> bytes = (width > 0 || height > 0)
+					? imageService.getOptimizedImageByClassification(session, classification, value, width, height, system, tuple.getItem4())
+					: imageService.getImageByClassification(session, classification, value, system, tuple.getItem4());
+			return bytes.map(this::toResponse);
+		}).onFailure().invoke(e -> log.error("Error retrieving image by classification '{}' value '{}': {}", classification, value, e.getMessage(), e));
+	}
+
+	// ──────────────────────────────────────────────────────────────────────────
 	// Helpers
 	// ──────────────────────────────────────────────────────────────────────────
 

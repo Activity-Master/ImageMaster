@@ -23,6 +23,22 @@ public class ImageSystemInstall implements ISystemUpdate
 	@Override
 	public Uni<Boolean> update(Mutiny.Session session, IEnterprise<?, ?> enterprise)
 	{
+		return doInstall(enterprise);
+	}
+
+	/**
+	 * Stateless twin of {@link #update(Mutiny.Session, IEnterprise)}. This installer manages its own
+	 * ActivityMaster session internally via {@link SessionUtils#withActivityMaster}, so the passed session
+	 * (managed or stateless) is not used — both overloads delegate to the same install body.
+	 */
+	@Override
+	public Uni<Boolean> update(Mutiny.StatelessSession session, IEnterprise<?, ?> enterprise)
+	{
+		return doInstall(enterprise);
+	}
+
+	private Uni<Boolean> doInstall(IEnterprise<?, ?> enterprise)
+	{
 		log.info("Starting image system installation");
 		return SessionUtils.<Boolean>withActivityMaster(enterprise.getName(), IImageService.ImageSystemName, tuple -> {
 			var amSession = tuple.getItem1();

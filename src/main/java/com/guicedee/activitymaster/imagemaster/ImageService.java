@@ -109,4 +109,23 @@ public class ImageService implements IImageService<ImageService>
 				.map(bytes -> bytes == null ? null : optimize(bytes, width, height, DefaultOutputFormat));
 	}
 
+	@Override
+	public Uni<byte[]> getImageByClassification(Mutiny.Session session, String classification, String value, ISystems<?, ?> system, UUID... identityToken)
+	{
+		return resourceItemService.get()
+				.findByClassification(session, ImageResourceType, classification, value, system, identityToken)
+				.chain(item -> item == null
+						? Uni.createFrom().nullItem()
+						: ((IResourceItem<?, ?>) item).getData(session, identityToken))
+				// A missing / unreadable resource item surfaces as a not-found query result.
+				.onFailure().recoverWithItem((byte[]) null);
+	}
+
+	@Override
+	public Uni<byte[]> getOptimizedImageByClassification(Mutiny.Session session, String classification, String value, int width, int height, ISystems<?, ?> system, UUID... identityToken)
+	{
+		return getImageByClassification(session, classification, value, system, identityToken)
+				.map(bytes -> bytes == null ? null : optimize(bytes, width, height, DefaultOutputFormat));
+	}
+
 }
