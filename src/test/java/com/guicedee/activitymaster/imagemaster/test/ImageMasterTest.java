@@ -65,7 +65,7 @@ public class ImageMasterTest
 
 	private void bootstrapEnterprise()
 	{
-		sessionFactory.withSession(session -> session.withTransaction(tx -> {
+		sessionFactory.withStatelessSession(session -> session.withTransaction(tx -> {
 			IEnterpriseService<?> enterpriseService = IGuiceContext.get(IEnterpriseService.class);
 			return enterpriseService.getEnterprise(session, ENTERPRISE)
 					.onFailure().recoverWithUni(t -> {
@@ -82,12 +82,12 @@ public class ImageMasterTest
 	private void installImageSystem()
 	{
 		IEnterpriseService<?> enterpriseService = IGuiceContext.get(IEnterpriseService.class);
-		IEnterprise<?, ?> enterprise = sessionFactory.withSession(s -> enterpriseService.getEnterprise(s, ENTERPRISE))
+		IEnterprise<?, ?> enterprise = sessionFactory.withStatelessSession(s -> enterpriseService.getEnterprise(s, ENTERPRISE))
 				.await().atMost(Duration.ofMinutes(1));
 		assertNotNull(enterprise, "Enterprise must exist before installing the image system");
 
 		ImageSystemInstall install = IGuiceContext.get(ImageSystemInstall.class);
-		Boolean done = install.update((Mutiny.Session) null, enterprise).await().atMost(Duration.ofMinutes(2));
+		Boolean done = install.update((Mutiny.StatelessSession) null, enterprise).await().atMost(Duration.ofMinutes(2));
 		assertEquals(Boolean.TRUE, done, "Image system installation should succeed");
 	}
 
@@ -199,7 +199,7 @@ public class ImageMasterTest
 
 		// Reference data: create the classification (committed) under the image system scope.
 		SessionUtils.<Void>withActivityMaster(ENTERPRISE, IMAGE_SYSTEM, tuple -> {
-			Mutiny.Session session = tuple.getItem1();
+			Mutiny.StatelessSession session = tuple.getItem1();
 			ISystems<?, ?> system = tuple.getItem3();
 			IClassificationService<?> classificationService = IGuiceContext.get(IClassificationService.class);
 			return classificationService.create(session, classification, "Image master test classification",
@@ -215,7 +215,7 @@ public class ImageMasterTest
 
 		// Attach the classification value to the uploaded resource item (committed).
 		SessionUtils.<Void>withActivityMaster(ENTERPRISE, IMAGE_SYSTEM, tuple -> {
-			Mutiny.Session session = tuple.getItem1();
+			Mutiny.StatelessSession session = tuple.getItem1();
 			ISystems<?, ?> system = tuple.getItem3();
 			IResourceItemService<?> resourceItemService = IGuiceContext.get(IResourceItemService.class);
 			return resourceItemService.findByUUID(session, java.util.UUID.fromString(id))
@@ -245,7 +245,7 @@ public class ImageMasterTest
 		final String value = "banner";
 
 		SessionUtils.<Void>withActivityMaster(ENTERPRISE, IMAGE_SYSTEM, tuple -> {
-			Mutiny.Session session = tuple.getItem1();
+			Mutiny.StatelessSession session = tuple.getItem1();
 			ISystems<?, ?> system = tuple.getItem3();
 			IClassificationService<?> classificationService = IGuiceContext.get(IClassificationService.class);
 			return classificationService.create(session, classification, "Image master scaled test classification",
@@ -258,7 +258,7 @@ public class ImageMasterTest
 				.await().atMost(Duration.ofMinutes(1));
 
 		SessionUtils.<Void>withActivityMaster(ENTERPRISE, IMAGE_SYSTEM, tuple -> {
-			Mutiny.Session session = tuple.getItem1();
+			Mutiny.StatelessSession session = tuple.getItem1();
 			ISystems<?, ?> system = tuple.getItem3();
 			IResourceItemService<?> resourceItemService = IGuiceContext.get(IResourceItemService.class);
 			return resourceItemService.findByUUID(session, java.util.UUID.fromString(id))

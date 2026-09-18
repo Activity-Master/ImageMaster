@@ -83,7 +83,7 @@ public class ImageService implements IImageService<ImageService>
 	}
 
 	@Override
-	public Uni<UUID> storeImage(Mutiny.Session session, String name, byte[] data, ISystems<?, ?> system, UUID... identityToken)
+	public Uni<UUID> storeImage(Mutiny.StatelessSession session, String name, byte[] data, ISystems<?, ?> system, UUID... identityToken)
 	{
 		return resourceItemService.get()
 				.create(session, ImageResourceType, name, data, system, identityToken)
@@ -91,7 +91,7 @@ public class ImageService implements IImageService<ImageService>
 	}
 
 	@Override
-	public Uni<byte[]> getImage(Mutiny.Session session, UUID imageId, ISystems<?, ?> system, UUID... identityToken)
+	public Uni<byte[]> getImage(Mutiny.StatelessSession session, UUID imageId, ISystems<?, ?> system, UUID... identityToken)
 	{
 		return resourceItemService.get()
 				.findByUUID(session, imageId)
@@ -103,14 +103,14 @@ public class ImageService implements IImageService<ImageService>
 	}
 
 	@Override
-	public Uni<byte[]> getOptimizedImage(Mutiny.Session session, UUID imageId, int width, int height, ISystems<?, ?> system, UUID... identityToken)
+	public Uni<byte[]> getOptimizedImage(Mutiny.StatelessSession session, UUID imageId, int width, int height, ISystems<?, ?> system, UUID... identityToken)
 	{
 		return getImage(session, imageId, system, identityToken)
 				.map(bytes -> bytes == null ? null : optimize(bytes, width, height, DefaultOutputFormat));
 	}
 
 	@Override
-	public Uni<byte[]> getImageByClassification(Mutiny.Session session, String classification, String value, ISystems<?, ?> system, UUID... identityToken)
+	public Uni<byte[]> getImageByClassification(Mutiny.StatelessSession session, String classification, String value, ISystems<?, ?> system, UUID... identityToken)
 	{
 		return resourceItemService.get()
 				.findByClassification(session, ImageResourceType, classification, value, system, identityToken)
@@ -122,7 +122,7 @@ public class ImageService implements IImageService<ImageService>
 	}
 
 	@Override
-	public Uni<byte[]> getOptimizedImageByClassification(Mutiny.Session session, String classification, String value, int width, int height, ISystems<?, ?> system, UUID... identityToken)
+	public Uni<byte[]> getOptimizedImageByClassification(Mutiny.StatelessSession session, String classification, String value, int width, int height, ISystems<?, ?> system, UUID... identityToken)
 	{
 		return getImageByClassification(session, classification, value, system, identityToken)
 				.map(bytes -> bytes == null ? null : optimize(bytes, width, height, DefaultOutputFormat));

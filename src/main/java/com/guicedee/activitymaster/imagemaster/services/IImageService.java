@@ -76,7 +76,7 @@ public interface IImageService<J extends IImageService<J>>
 	 * @param identityToken optional identity token(s)
 	 * @return the created resource item id
 	 */
-	Uni<UUID> storeImage(Mutiny.Session session, String name, byte[] data, ISystems<?, ?> system, UUID... identityToken);
+	Uni<UUID> storeImage(Mutiny.StatelessSession session, String name, byte[] data, ISystems<?, ?> system, UUID... identityToken);
 
 	/**
 	 * Retrieves the raw image bytes for a stored resource item, honouring row-level security.
@@ -87,7 +87,7 @@ public interface IImageService<J extends IImageService<J>>
 	 * @param identityToken optional identity token(s)
 	 * @return the stored bytes, or {@code null} when not present / not readable
 	 */
-	Uni<byte[]> getImage(Mutiny.Session session, UUID imageId, ISystems<?, ?> system, UUID... identityToken);
+	Uni<byte[]> getImage(Mutiny.StatelessSession session, UUID imageId, ISystems<?, ?> system, UUID... identityToken);
 
 	/**
 	 * Retrieves a dimension-bounded, optimised copy of a stored image.
@@ -100,7 +100,7 @@ public interface IImageService<J extends IImageService<J>>
 	 * @param identityToken optional identity token(s)
 	 * @return the optimised bytes, or {@code null} when not present / not readable
 	 */
-	Uni<byte[]> getOptimizedImage(Mutiny.Session session, UUID imageId, int width, int height, ISystems<?, ?> system, UUID... identityToken);
+	Uni<byte[]> getOptimizedImage(Mutiny.StatelessSession session, UUID imageId, int width, int height, ISystems<?, ?> system, UUID... identityToken);
 
 	/**
 	 * Retrieves the raw image bytes for the first stored image carrying the given classification / value,
@@ -113,7 +113,7 @@ public interface IImageService<J extends IImageService<J>>
 	 * @param identityToken  optional identity token(s)
 	 * @return the stored bytes, or {@code null} when no matching image is present / readable
 	 */
-	Uni<byte[]> getImageByClassification(Mutiny.Session session, String classification, String value, ISystems<?, ?> system, UUID... identityToken);
+	Uni<byte[]> getImageByClassification(Mutiny.StatelessSession session, String classification, String value, ISystems<?, ?> system, UUID... identityToken);
 
 	/**
 	 * Retrieves a dimension-bounded, optimised copy of the first stored image carrying the given
@@ -128,5 +128,5 @@ public interface IImageService<J extends IImageService<J>>
 	 * @param identityToken  optional identity token(s)
 	 * @return the optimised bytes, or {@code null} when no matching image is present / readable
 	 */
-	Uni<byte[]> getOptimizedImageByClassification(Mutiny.Session session, String classification, String value, int width, int height, ISystems<?, ?> system, UUID... identityToken);
+	Uni<byte[]> getOptimizedImageByClassification(Mutiny.StatelessSession session, String classification, String value, int width, int height, ISystems<?, ?> system, UUID... identityToken);
 }

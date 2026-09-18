@@ -66,7 +66,7 @@ public class ImageRestService
 	                          byte[] data)
 	{
 		return SessionUtils.<String>withActivityMaster(enterpriseName, systemName, tuple -> {
-			Mutiny.Session session = tuple.getItem1();
+			Mutiny.StatelessSession session = tuple.getItem1();
 			ISystems<?, ?> system = tuple.getItem3();
 			return imageService.storeImage(session, name, data, system, tuple.getItem4())
 					.map(UUID::toString);
@@ -95,7 +95,7 @@ public class ImageRestService
 	                              @Parameter(description = "Maximum height in px (0 = original)", example = "256") @QueryParam("h") @DefaultValue("0") int height)
 	{
 		return SessionUtils.<Response>withActivityMaster(enterpriseName, systemName, tuple -> {
-			Mutiny.Session session = tuple.getItem1();
+			Mutiny.StatelessSession session = tuple.getItem1();
 			ISystems<?, ?> system = tuple.getItem3();
 			UUID id = UUID.fromString(imageId);
 			Uni<byte[]> bytes = (width > 0 || height > 0)
@@ -129,7 +129,7 @@ public class ImageRestService
 	                                              @Parameter(description = "Maximum height in px (0 = original)", example = "256") @QueryParam("h") @DefaultValue("0") int height)
 	{
 		return SessionUtils.<Response>withActivityMaster(enterpriseName, systemName, tuple -> {
-			Mutiny.Session session = tuple.getItem1();
+			Mutiny.StatelessSession session = tuple.getItem1();
 			ISystems<?, ?> system = tuple.getItem3();
 			Uni<byte[]> bytes = (width > 0 || height > 0)
 					? imageService.getOptimizedImageByClassification(session, classification, value, width, height, system, tuple.getItem4())

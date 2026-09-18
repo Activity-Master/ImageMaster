@@ -27,7 +27,7 @@ public class ImageSystem
 	private Provider<ISystemsService<?>> systemsService;
 
 	@Override
-	public Uni<ISystems<?, ?>> registerSystem(Mutiny.Session session, IEnterprise<?, ?> enterprise)
+	public Uni<ISystems<?, ?>> registerSystem(Mutiny.StatelessSession session, IEnterprise<?, ?> enterprise)
 	{
 		log.info("Registering Image System for enterprise: '{}'", enterprise.getName());
 		return systemsService.get()
@@ -35,12 +35,6 @@ public class ImageSystem
 				.chain(system -> getSystem(session, enterprise)
 						.chain(sys -> systemsService.get().registerNewSystem(session, enterprise, sys))
 						.chain(() -> Uni.createFrom().item(system)));
-	}
-
-	@Override
-	public Uni<Void> createDefaults(Mutiny.Session session, IEnterprise<?, ?> enterprise)
-	{
-		return Uni.createFrom().voidItem();
 	}
 
 	/** Stateless variant — the image type taxonomy is provisioned by ImageSystemInstall. */

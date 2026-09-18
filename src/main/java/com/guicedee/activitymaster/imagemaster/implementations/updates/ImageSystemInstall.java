@@ -20,14 +20,8 @@ import static com.guicedee.client.IGuiceContext.get;
 @Log4j2
 public class ImageSystemInstall implements ISystemUpdate
 {
-	@Override
-	public Uni<Boolean> update(Mutiny.Session session, IEnterprise<?, ?> enterprise)
-	{
-		return doInstall(enterprise);
-	}
-
 	/**
-	 * Stateless twin of {@link #update(Mutiny.Session, IEnterprise)}. This installer manages its own
+	 * Stateless twin of {@link #update(Mutiny.StatelessSession, IEnterprise)}. This installer manages its own
 	 * ActivityMaster session internally via {@link SessionUtils#withActivityMaster}, so the passed session
 	 * (managed or stateless) is not used — both overloads delegate to the same install body.
 	 */
