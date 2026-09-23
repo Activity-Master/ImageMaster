@@ -11,22 +11,9 @@ module com.guicedee.activitymaster.imagemaster {
 	requires java.desktop;
 
 	requires com.guicedee.activitymaster.fsdm;
-	requires com.guicedee.activitymaster.fsdm.client;
-	requires com.guicedee.guicedinjection;
-	requires com.google.guice;
-	requires com.guicedee.client;
 
-	requires com.guicedee.rest;
-	requires com.guicedee.vertx;
-	requires com.guicedee.openapi;
-	requires io.vertx.core;
-	requires jakarta.ws.rs;
-	requires jakarta.validation;
 
-	requires io.smallrye.mutiny;
-	requires org.hibernate.reactive;
 	requires static lombok;
-	requires org.apache.logging.log4j;
 
 	provides IGuiceModule with ImageServiceBinder;
 	provides IMasterSystem with ImageSystem;
