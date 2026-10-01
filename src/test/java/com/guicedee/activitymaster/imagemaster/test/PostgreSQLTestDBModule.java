@@ -40,6 +40,13 @@ public class PostgreSQLTestDBModule
     static {
         postgresContainer.start();
         try {
+            System.setProperty("ENVIRONMENT", "test");
+            System.setProperty("FSDM_SSL_MODE", "disable");
+            System.setProperty("FSDM_DBSERVER", "127.0.0.1");
+            System.setProperty("FSDM_DBPORT", String.valueOf(postgresContainer.getFirstMappedPort()));
+            System.setProperty("FSDM_DBNAME", postgresContainer.getDatabaseName());
+            System.setProperty("FSDM_USER", postgresContainer.getUsername());
+            System.setProperty("FSDM_PASSWORD", postgresContainer.getPassword());
             FsdmSchema.forEachScript((script, sql) -> {
                 postgresContainer.copyFileToContainer(Transferable.of(sql.getBytes(StandardCharsets.UTF_8)),
                         "/tmp/" + script);
